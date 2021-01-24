@@ -1,7 +1,7 @@
 from discord import embeds
 from prawcore.exceptions import Redirect
 from Scripts.RedditController import reddit
-import discord
+import discord,random
 from random import choice, randint
 from discord.ext import commands
 @commands.command()
@@ -9,27 +9,43 @@ from discord.ext import commands
 async def rmeme(ctx,arg=None):
     memessb = ['famil','memes','wholesomememes']
     animesubr = ['animememes','Animemes']
+    sl = ""
     if arg == None:
-        arg = choice(memessb)
-    if arg == 'anime':
-        arg = choice(animesubr)
+        sl = random.choice(memessb)
+    elif arg == 'anime':
+        sl = random.choice(animesubr)
+    else:
+        sl = arg
     tembed = discord.Embed(
         title='rmeme',
-        description="Escolhendo um meme no reddit....."
+        description="Escolhendo um meme no Reddit....."
     )
     m = await ctx.send(embed=tembed)
     sub =""
     i  = randint(0,200)
-    subreddit = reddit.subreddit(arg)
-    sub =  reddit.subreddit(arg).random()
+    subreddit = reddit.subreddit(sl)
+    sub =  reddit.subreddit(sl).random()
+    
+    if sub.over_18:
+        if ctx.channel.is_nsfw():
+           await ctx.send(":unlock: Aviso Esse conteudo é NSFW!")
+        else:
+            embedd = discord.Embed(
+                title="Bloqueado!",
+                description=":lock: Desculpe Como esse conteudo é NSFW!,e o Canal não tem O NSFW ativo eu não posso enviar esse conteudo!",
+                color=0xff0000
+            )
+            await m.edit(embed=embedd)
+            return
     embed = discord.Embed(
         title=sub.title,
         color=0xFFA500
     )
     embed.set_thumbnail(url=subreddit.icon_img)
-    embed.set_footer(text=f'meme em /r/{arg}')
+    embed.set_footer(text=f'Meme em /r/{sl}')
     embed.set_author(name=sub.author.name,icon_url=sub.author.icon_img)
     embed.set_image(url=sub.url)
     await m.edit(embed=embed)
+    
 def setup(bot):
     bot.add_command(rmeme)
