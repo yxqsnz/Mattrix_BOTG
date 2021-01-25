@@ -1,4 +1,4 @@
-# Mattrix_BOT
+# Mattrix BOT
 ## um Simples bot do discord
 ## Criado Pelo LickBrines(MeiaNoiite no github)
 # Como usar?

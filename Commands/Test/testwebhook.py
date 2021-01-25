@@ -1,16 +1,26 @@
-import discord
-import aiohttp
-import main
+import requests
+import discord,Scripts.envcontroller as env
+from requests.api import head
 from discord.ext import commands
-from discord import Webhook, AsyncWebhookAdapter
-from main import bot
-
+from discord import Webhook, RequestsWebhookAdapter
 @commands.command()
-async def testwh(ctx):
-    pass
-    async with aiohttp.ClientSession() as session:
-        webhook = Webhook.from_url('https://discordapp.com/api/webhooks/799396597225750529/94d-ODA76vsT5MA8L3sWMj08a1RQ5l_QPpKF2AEQ-pAzOUTEpmpiETtOlHnbBZvwiAZg', adapter=AsyncWebhookAdapter(session))
-        await webhook.send('Olá', username='hi!')
+async def testwhi(ctx):
+    url = "https://discord.com/api/webhooks/803262794665164910/GnkUUGJyqwc-cOhvHFxDCn6W4TgfqsioEwtZCH-WvxxsLD2sAUGXJG6jaEvYXqSuEUxS"
+    urlid = "https://discord.com/api/webhooks/803262794665164910"
+    rpdata = {
+        "channel_id":ctx.channel.id,
+        "guild_id":ctx.guild.id
+    }
+    headers = {
+         "Authorization": f"Bot {env.ReturnEnv('TOKEN')}" 
+    }
+    r = requests.patch(url,json=rpdata)
 
+    await ctx.send(r.status_code)
+    data = {
+        "content":"Awman!"
+    }
+    await ctx.send(f"{r.status_code} {r.json} {r.content}")
+    rr = requests.post(url,json=r.json())
 def setup(bot):
-    bot.add_command(testwh)
+    bot.add_command(testwhi)

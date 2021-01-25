@@ -35,20 +35,15 @@ def returncmds():
     return listToString(pcmds)
 cmds:list = []
 os.system('rm -rf __pycache__')
-
 cmd_folders = []
 for r,s,files in os.walk("./Commands"):
-  
     for folders in s:
         cmd_folders.append(folders)
     for folder in cmd_folders:
        for file in os.listdir(f"./Commands/{folder}"):
          if file.endswith(".py"):
-           
             command = file.replace('.py',"")
             cmds.append(command)
-            
-
             for cmd in cmds:
                 try:
                     try:
@@ -63,13 +58,9 @@ for r,s,files in os.walk("./Commands"):
     
 
 sys.stdout.write("\r[BOT.Main/CommandLoader/INFO] Carregando comandos...")
-
-
 end = time.perf_counter()
-
 sys.stdout.write(f"\r[BOT.Main/CommandLoader/Ready] Carregado {commands_loaded} Comandos em {end - started:4f} Segundos.")
 print(' ')
-
 sys.stdout.write("\r[BOT.Main/INFO] Conectando com a api...")
 @bot.event
 async def on_command_error(ctx,e):
