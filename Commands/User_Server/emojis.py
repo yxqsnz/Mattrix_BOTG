@@ -8,6 +8,7 @@ from  main import bot
 async def emojis(ctx:Context):
     emojis = []
     total_send = 0
+    
     e = 803400950894428231
     paperplane = bot.get_emoji(id=e)
     sv:Guild = ctx.guild
