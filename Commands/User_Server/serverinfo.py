@@ -1,4 +1,4 @@
-from discord import Guild,Embed, embeds
+from discord import Guild,Embed
 from discord.ext import commands
 from discord.ext.commands.context import Context
 @commands.command(aliases=['sinfo','svinfo'])
