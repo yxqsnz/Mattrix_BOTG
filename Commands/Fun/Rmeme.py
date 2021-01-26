@@ -4,18 +4,18 @@ from Scripts.RedditController import reddit
 import discord,random
 from random import choice, randint
 from discord.ext import commands
-@commands.command()
+@commands.command(brief="Pega um Meme no Reddit",description="Pega Um meme no reddit [anime/SubReddit]")
 
-async def rmeme(ctx,arg=None):
+async def rmeme(ctx,subreddit=None):
     memessb = ['famil','memes','wholesomememes']
     animesubr = ['animememes','Animemes']
     sl = ""
-    if arg == None:
+    if subreddit == None:
         sl = random.choice(memessb)
-    elif arg == 'anime':
+    elif subreddit == 'anime':
         sl = random.choice(animesubr)
     else:
-        sl = arg
+        sl = subreddit
     tembed = discord.Embed(
         title='rmeme',
         description="Escolhendo um meme no Reddit....."

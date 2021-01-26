@@ -8,7 +8,7 @@ pid = os.getpid()
 py = psutil.Process(pid)
 memoryUse = round( py.memory_info()[0]  / 1000000) # memory use in GB...I think
 from main import client
-@commands.command()
+@commands.command(aliases=['botinfo'],brief="Mostra as informaçoes do bot como ping")
 async def status(ctx):
     antes = time.monotonic()
     msg = await ctx.send(embed=discord.Embed(title="Aguarde...", description=f"Isso pode demorar um pouco....", color=0xFF5733))

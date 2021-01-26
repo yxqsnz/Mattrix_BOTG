@@ -2,7 +2,7 @@ from discord.ext import commands
 from discord.ext.commands import has_permissions, CheckFailure
 
 
-@commands.command()
+@commands.command(brief="Faz o bot falar algo\nPrecisa da permisao `gerenciar mensagens`")
 @has_permissions(manage_messages=True)
 async def say(ctx, *,args):
         await ctx.send(args)

@@ -1,6 +1,6 @@
 import random
 from discord.ext import commands 
-@commands.command()
+@commands.command(brief="...",description="...")
 async def moeda(ctx,arg=None):
     if arg == None:
         await ctx.send("Uso `moeda <cara/coroa>`")

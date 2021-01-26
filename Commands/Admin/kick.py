@@ -1,6 +1,6 @@
 import discord
 from discord.ext  import commands
-@commands.command()
+@commands.command(brief="Expulsa um Membro do servidor\nPrecisa da permisão `Expulsar Membros`")
 @commands.has_permissions(kick_members = True)
 async def kick(ctx,Member:discord.Member=None):
     if Member == None:

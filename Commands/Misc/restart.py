@@ -6,7 +6,7 @@ import time
 import discord,os
 import signal,sys
 from main import bot
-@commands.command()
+@commands.command(brief="Comando instavel")
 
 async def Restart(ctx):
     id = str(ctx.author.id)

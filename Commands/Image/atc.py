@@ -1,7 +1,7 @@
 from discord.ext import commands
 import discord
 from discord.ext.commands import MissingRequiredArgument
-@commands.command()
+@commands.command(aliases=['mídia','midia'],brief="Mostra uma mídia")
 async def atc(ctx,*,args=""):
    
     if args == "":

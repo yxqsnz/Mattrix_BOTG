@@ -1,7 +1,7 @@
 import discord
 from MojangAPI import Client
 from discord.ext import commands
-@commands.command()
+@commands.command(brief="Pega uma Skin de um jogador de minecraft")
 async def mcskin(ctx,arg=None):
     if arg == None:
         await  ctx.send("Uso: mcskin <nomedeusuariominecraft>")

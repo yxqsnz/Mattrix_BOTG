@@ -3,7 +3,7 @@ from discord.ext import commands
 import discord,random
 from discord.ext.commands.errors import MissingPermissions
 bangifs =['https://tenor.com/view/banido-gif-18007190','https://tenor.com/view/banido-will-smith-will-smith-banido-tayklor-bibi-viado-gif-16569411','https://tenor.com/view/will-smith-banido-meme-dance-gif-16971203']
-@commands.command()
+@commands.command(brief="Bane um Membro\nPrecisa da Permisão `Banir Membros`")
 @commands.has_permissions(ban_members=True)
 async def ban(ctx,Member:discord.Member=None,*,args=None):
     if Member == None:
