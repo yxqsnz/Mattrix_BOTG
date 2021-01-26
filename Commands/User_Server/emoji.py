@@ -1,7 +1,7 @@
 from discord.ext import commands
 from discord import Guild,Embed,Emoji
 from discord.ext.commands.context import Context
-@commands.command()
+@commands.command(brief="emoji...")
 async def emoji(ctx:Context,arg=None):
     if arg == None:
         await ctx.send("USO emoji <emoji>")

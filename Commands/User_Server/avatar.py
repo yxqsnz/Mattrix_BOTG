@@ -1,7 +1,7 @@
 import discord
 
 from discord.ext import commands
-@commands.command()
+@commands.command(brief="Envia o avatar de alguém")
 async def avatar(ctx,Member:discord.Member=None):
      if Member == None:
          Member = ctx.author

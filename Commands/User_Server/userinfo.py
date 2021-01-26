@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-@commands.command()
+@commands.command(aliases=["uinfo"],brief="mostra as infomacoes do usuario")
 async def userinfo(ctx,Member:discord.Member=None):
    if Member == None:
        Member = ctx.author

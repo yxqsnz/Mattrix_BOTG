@@ -1,7 +1,7 @@
 from discord import Guild,Embed, embeds
 from discord.ext import commands
 from discord.ext.commands.context import Context
-@commands.command(aliases=['sinfo','svinfo'])
+@commands.command(aliases=['sinfo','svinfo'],brief="Envia as informacoes do servidor")
 async def serverinfo(ctx:Context):
     sv:Guild = ctx.guild
     e:Embed = Embed(

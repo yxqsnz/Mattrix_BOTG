@@ -3,7 +3,7 @@ import Scripts.base64MGR
 from discord.ext import commands
 
 
-@commands.command()
+@commands.command(brief='Codifica o texto para alguma Codificação')
 async def encode(ctx,arg1="",*,args=""):
     pass
     if(arg1 == False or arg1==""):

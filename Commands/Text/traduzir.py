@@ -10,22 +10,19 @@ uneux.Login(env.ReturnEnv("Uneux_webhook_url"))
 uneux.SetAvatar("https://img2.gratispng.com/20180617/oek/kisspng-google-translate-translation-mobile-phones-android-google-translator-toolkit-5b2659dfc5b4e8.0868407315292400318098.jpg")
 uneux.SetUsername("Mattrix Bot Translate  Powered by google translate!")
 
-@commands.command(aliases=['tdz','translate'])
+@commands.command(aliases=['tdz','translate'],brief="Traduz um texto")
 
-async def traduzir(ctx,arg=None,*,args=None):
-    if arg == None:
-        await ctx.send("USO: traduzir/translate/tdz <lang> hi")
-        arg = "pt"
-        return
-    if args == None:
+async def traduzir(ctx,Langparatraduzir,*,TextoParaTraduzir=None):
+
+    if TextoParaTraduzir == None:
         await ctx.send("Coloque um texto para traduzir!")
         return
-    tdz = t.translate(f"{args}", dest=arg)    
+    tdz = t.translate(f"{TextoParaTraduzir}", dest=Langparatraduzir)    
     if str(ctx.guild.id) == "693164410205765684":
         uneux.Send(f"De {tdz.src} Para {tdz.dest}: `{tdz.text}`")
         return
     await ctx.send(f"De {str(tdz.src).capitalize()} Para {str(tdz.dest).capitalize()}: `{tdz.text}`")
-    del arg,args
+    del Langparatraduzir,TextoParaTraduzir
 def setup(bot):
     bot.add_command(traduzir)
     
