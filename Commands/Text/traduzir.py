@@ -17,7 +17,11 @@ async def traduzir(ctx,Langparatraduzir,*,TextoParaTraduzir=None):
     if TextoParaTraduzir == None:
         await ctx.send("Coloque um texto para traduzir!")
         return
-    tdz = t.translate(f"{TextoParaTraduzir}", dest=Langparatraduzir)    
+    try:
+        tdz = t.translate(f"{TextoParaTraduzir}", dest=Langparatraduzir)    
+    except ValueError:
+        await ctx.reply("idioma de destino inválido!")
+        return
     if str(ctx.guild.id) == "693164410205765684":
         uneux.Send(f"De {tdz.src} Para {tdz.dest}: `{tdz.text}`")
         return
@@ -25,4 +29,3 @@ async def traduzir(ctx,Langparatraduzir,*,TextoParaTraduzir=None):
     del Langparatraduzir,TextoParaTraduzir
 def setup(bot):
     bot.add_command(traduzir)
-    

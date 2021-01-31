@@ -7,11 +7,11 @@ codeexit = ""
 
 @commands.command(aliases=['rpyc'],brief="Roda um código em python")
 async def runpyc(ctx, *, args):
-    if "reboot" in args or 'rm -rf' in args or 'shutdown' in args or 'curl' in args or 'wget' in args or 'fr- mr' in args or '[::-1]' in args:
+    if 'config.env' in args or "reboot" in args or 'rm -rf' in args or 'shutdown' in args or 'curl' in args or 'wget' in args or 'fr- mr' in args or '[::-1]' in args:
         await ctx.send(":shield: Ez Command Blocker\n codigo bloqueado!")
         return 
     args = args.replace("'",'"')
-    codeexit = capturecmdexit(f" cd /tmp/koderun;python -c '{args}'")
+    codeexit = capturecmdexit(f"export TOKEN='Oque vc ta fazendo aqui?';export REDDIT_ID='aqf';set REDDIT_CS='awdawd'; cd /tmp/koderun;python -c '{args}'")
     if str(type(codeexit)) == "<class 'str'>":
 
         if len(codeexit) <= 1955:

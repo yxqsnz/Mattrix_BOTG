@@ -1,9 +1,12 @@
 from discord import Guild,Embed, embeds
 from discord.ext import commands
+from main import bot
 from discord.ext.commands.context import Context
 @commands.command(aliases=['sinfo','svinfo'],brief="Envia as informacoes do servidor")
-async def serverinfo(ctx:Context):
-    sv:Guild = ctx.guild
+async def serverinfo(ctx:Context, guild=None):
+    if guild == None:
+          sv:Guild = ctx.guild
+
     e:Embed = Embed(
         title=f"Informaçoes de {sv.name}",
         color = 0x3242E5,

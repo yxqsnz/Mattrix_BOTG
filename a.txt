@@ -1,1 +1,1 @@
-<discord.ext.commands.help.DefaultHelpCommand object at 0x7f36a210bbb0>
+<bottoken>

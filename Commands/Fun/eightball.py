@@ -8,3 +8,4 @@ async def eightball(ctx):
 
 def setup(bot):
     bot.add_command(eightball)
+    

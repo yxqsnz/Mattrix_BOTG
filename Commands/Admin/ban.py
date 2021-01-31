@@ -6,6 +6,9 @@ bangifs =['https://tenor.com/view/banido-gif-18007190','https://tenor.com/view/b
 @commands.command(brief="Bane um Membro\nPrecisa da Permisão `Banir Membros`")
 @commands.has_permissions(ban_members=True)
 async def ban(ctx,Member:discord.Member=None,*,args=None):
+    if ctx.author == Member:
+        await ctx.reply("Você não pode se-banir!")
+        return
     if Member == None:
         await ctx.send('Uso: ban @Membro <Motivo>')
         return
@@ -23,4 +26,5 @@ async def ban(ctx,Member:discord.Member=None,*,args=None):
     await ctx.channel.send(f"{Member.display_name} Foi Banido por {ctx.author.name}!")
     await ctx.channel.send(random.choice(bangifs))
 def setup(bot):
+    
     bot.add_command(ban)

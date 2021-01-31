@@ -2,11 +2,11 @@ import discord,math,time,os,psutil
 import psutil,sys
 from platform import platform
 from main import bot
-from main import *
+from discord.ext import commands
+from Scripts.getramusage import getrusage
 #a
-pid = os.getpid()
-py = psutil.Process(pid)
-memoryUse = round( py.memory_info()[0]  / 1000000) # memory use in GB...I think
+
+memoryUse = getrusage()
 from main import client
 @commands.command(aliases=['botinfo'],brief="Mostra as informaçoes do bot como ping")
 async def status(ctx):

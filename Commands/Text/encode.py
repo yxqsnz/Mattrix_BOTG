@@ -9,6 +9,8 @@ async def encode(ctx,arg1="",*,args=""):
     if(arg1 == False or arg1==""):
         await  ctx.reply("USO `m!encode <md5/md10/B64-decode/B64-encode> texto.comq`")
     else:
+        if True and not False:
+            print("Ok!")
         if args == "" and arg1:
             await ctx.reply(f"USO: `m!encode {arg1} texto`")
         if (arg1 == "md5" and args):

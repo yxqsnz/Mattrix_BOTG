@@ -1,16 +1,23 @@
 from logging import exception
 import discord,colorama,sys,json,typing,glob,os,time,psutil,random,asyncio
+from discord.errors import Forbidden
 
+from datetime import datetime
 from discord.ext import commands
+from discord.ext.commands.errors import MissingPermissions as missperm
 from discord.ext.commands import *
 from discord.ext.commands import DefaultHelpCommand
 import discord.ext.commands.help
 from Scripts.envcontroller import ReturnEnv as config
-from Scripts.MemoryCleaner import InitMemCleaner
+from Scripts.garc import Initgc
 from pretty_help import PrettyHelp
 pid = os.getpid()
 py = psutil.Process(pid)
-print('Starting UP....')
+print('Starting UP....\n')
+xy = open('./a.txt','r')
+TK =""
+for line in xy:
+  TK += line
 os.system('rm -rf /tmp/koderun/')
 time.sleep(0.1)
 os.system('mkdir /tmp/koderun/')
@@ -18,8 +25,6 @@ def rtk():
     pass
 #config = json.loads(config_t)
 client = discord.Client()
-
-
 started = time.perf_counter()
 total_commands = 0
 def listToString(s):  
@@ -57,7 +62,6 @@ help_command=PrettyHelp(),
 description="Um Simples bot do discord!"
 )
 cmds:list = []
-os.system('rm -rf __pycache__')
 cmd_folders = []
 
 for r,s,files in os.walk("./Commands"):
@@ -77,22 +81,43 @@ for r,s,files in os.walk("./Commands"):
                     except ExtensionAlreadyLoaded:
                             pass
                 except Exception as e:
-                    print(f"[{colorama.Fore.LIGHTYELLOW_EX}!!!{colorama.Fore.WHITE}] Occoreu um erro ao carregar um comando: {e}")
+                    print(f"[{colorama.Fore.LIGHTYELLOW_EX}!!!{colorama.Fore.WHITE}] Ocorreu um erro ao carregar um comando: {e}")
                     exit(1)
-
-
-
-sys.stdout.write("\r[BOT.Main/CommandLoader/INFO] Carregando comandos...")
 end = time.perf_counter()
 sys.stdout.write(f"\r[BOT.Main/CommandLoader/Ready] Carregado {commands_loaded} Comandos em {end - started:4f} Segundos.")
 print(' ')
 sys.stdout.write("\r[BOT.Main/INFO] Conectando com a api...")
+
 @bot.event
 async def on_message(message):
-
+  if message.author.bot:
+      return
+  if message.author.id == bot.user.id:
+      return
   if f"<@!{bot.user.id}>" in message.content:
         await message.channel.send(f"Olá, **{message.author.mention}**, Meu prefixo nesse server é `{get_prefix(message.guild.id,message)}`! digite `{get_prefix(message.guild.id,message)}help` para ver meus comandos!")
 
+  try:
+     open(f'./data/config/{message.guild.id}.json','r')
+  except FileNotFoundError:
+      f = open(f'./data/config/{message.guild.id}.json','w')
+      a = {
+          "cmdchannel":"any"
+      }
+      print("***\narquivo de configuração criado!\n**")
+      json.dump(a,f)
+      f.close()
+  f = open(f'./data/config/{message.guild.id}.json','r')
+ 
+  j = json.load(f)
+  f.close()
+  if message.content.startswith(get_prefix(message.guild.id,message)):
+    if j['cmdchannel'] == 'any' or message.author.guild_permissions.administrator:
+          pass
+    elif j['cmdchannel'] != str(message.channel.id):
+      await message.reply(f"Esse canal não pode executar comandos! o unico canal que pode executar comandos é <#{j['cmdchannel']}>")
+      await asyncio.sleep(1)
+      return
   await bot.process_commands(message)
 @bot.event
 async def on_command_error(ctx,e):
@@ -101,10 +126,17 @@ async def on_command_error(ctx,e):
         await ctx.reply("Desculpe esse comando não existe.")
     elif isinstance(e,TimeoutError):
         await ctx.reply("[*]Info tempo limite excedido")
-    elif isinstance(e,MissingPermissions):
-        await ctx.reply("Você não tem permissão para executar esse comando!")
+    elif isinstance(e,missperm) or isinstance(e,Forbidden):
+        await ctx.reply("Sem  permissão.")
     else:
-        await ctx.reply(f"**{ctx.message.author.name}**,occoreu um erro ao executar esse comando.\nErro: `{str(e)}.`")
+        em:discord.Embed = discord.Embed()
+        em.title = ":("
+        em.description = "Ocorreu um erro ao executar esse comando!"
+        em.add_field(name="ERRO: ",value=f"`{e}`")
+        em.color = 0x0000ff
+        em.set_author(name=ctx.author.display_name,icon_url=ctx.author.avatar_url)
+        em.timestamp = datetime.utcnow()
+        await ctx.reply(embed=em)
 
 @bot.event
 async def on_guild_join(guild): #when the bot joins the guild
@@ -127,6 +159,7 @@ async def on_guild_remove(guild): #when the bot is removed from the guild
         json.dump(prefixes, f, indent=4)
 @bot.event
 async def on_ready():
+    os.system('rm -rf *.txt')
 
     sys.stdout.write(f"\r{colorama.Fore.GREEN}[BOT.Main/Ready] Conectado com a api BOT: {bot.user} PREFIXO PADRÃO: {config('PREFIX')}{ colorama.Fore.WHITE}\n")
     from Scripts.RedditController import reddit
@@ -140,7 +173,7 @@ async def on_ready():
     bot.loop.create_task(change_s())
     bot.loop.create_task(run_memc())
 async def run_memc():
-    await InitMemCleaner()
+    await Initgc()
 
 async def change_s():
 
@@ -161,6 +194,6 @@ async def change_s():
         await asyncio.sleep(10)
 
 try:
-    bot.run(config('TOKEN'))
+    bot.run(TK)
 except Exception as e:
     print(f"\n\nBot Desligado Motivo: {e}\n\n")
